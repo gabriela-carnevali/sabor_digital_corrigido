@@ -1,3 +1,4 @@
+const e = require('express');
 const pool = require('../config/database');
 
 class UsuarioRepository {
@@ -6,8 +7,8 @@ class UsuarioRepository {
         return rows;
     }
 
-    async findById(id) {
-        const [rows] = await pool.query('SELECT * FROM usuario WHERE id = ?', [id]);
+    async findByEmail(email) {
+        const [rows] = await pool.query('SELECT * FROM usuario WHERE email = ?', [email]);
         return rows[0];
     }
 
@@ -20,7 +21,7 @@ class UsuarioRepository {
         return result.insertId;
     }
 
-    async update(id, usuarioData) {
+    async update(email, usuarioData) {
         const fields = [];
         const values = [];
         for (const [key, value] of Object.entries(usuarioData)) {
@@ -29,14 +30,14 @@ class UsuarioRepository {
         }
         if (fields.length === 0) return null;
 
-        values.push(id);
-        const query = `UPDATE usuario SET ${fields.join(', ')} WHERE id = ?`;
+        values.push(email);
+        const query = `UPDATE usuario SET ${fields.join(', ')} WHERE email = ?`;
         const [result] = await pool.query(query, values);
         return result.affectedRows;
     }
 
-    async delete(id) {
-        const [result] = await pool.query('DELETE FROM usuario WHERE id = ?', [id]);
+    async delete(email) {
+        const [result] = await pool.query('DELETE FROM usuario WHERE email = ?', [email]);
         return result.affectedRows;
     }
 }

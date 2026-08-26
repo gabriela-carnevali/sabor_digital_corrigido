@@ -8,6 +8,7 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'sabordigital',
     port: process.env.DB_PORT || 3306,
+    jwt_secret: process.env.JWT_SECRET || 'chave_super_secreta_sabor_digital_123',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
