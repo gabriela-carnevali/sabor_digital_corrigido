@@ -37,7 +37,7 @@ class UsuarioService {
       throw { status: 400, mensagem: "Nome, e-mail e senha são obrigatórios" };
     }
 
-    // Usa o repository para validar que o e=mail existe
+    // Usa o repository para validar que o e-mail existe
     const usuarioExistente = await UsuarioRepository.findByEmail(email);
     if (usuarioExistente) {
       throw { status: 409, mensagem: "E-mail já está em uso" };

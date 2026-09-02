@@ -2,11 +2,12 @@ const express = require('express');
 const router = express.Router();
 const ProdutoController = require('../controllers/ProdutoController');
 const upload = require('../config/multer');
+const { verificarToken , verificarAdmin } = require('../middlewares/authMiddleware')
 
 router.get('/', ProdutoController.listar);
 router.get('/:id', ProdutoController.buscarPorId);
-router.post('/', upload.single('foto'), ProdutoController.cadastrar);
-router.put('/:id', upload.single('foto'), ProdutoController.atualizar);
-router.delete('/:id', ProdutoController.deletar);
+router.post('/', verificarToken, verificarAdmin, upload.single('foto'), ProdutoController.cadastrar);
+router.put('/:id', verificarToken, verificarAdmin,  upload.single('foto'), ProdutoController.atualizar);
+router.delete('/:id', verificarToken, verificarAdmin, ProdutoController.deletar);
 
 module.exports = router;
